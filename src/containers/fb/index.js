@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
 import { Switch, Route, NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Identity from './src/identity'
 import Content from './src/content'
 
-export default class Facebook extends Component {
+const mapStateToProps = state => { return {
+    auth: state.facebook.auth.isAuthorized
+  }
+}
+
+class FacebookConnected extends Component {
   render() {
     return (
       <div>
         <h1>Facebook</h1>
         <nav>
-          <ul>
-            <li><NavLink to='/'>Home</NavLink></li>
-            <li><NavLink to='/identity'>SignIn</NavLink></li>
-          </ul>
+        <ul>
+          <li><NavLink to='/'>Home</NavLink></li>
+          <li><NavLink to='/identity'>SignIn</NavLink></li>
+        </ul>
         </nav>
         <main>
           <Switch>
@@ -32,3 +38,7 @@ const Main = () => {
     <h1>Main page!</h1>
   )
 }
+
+const Facebook = connect(mapStateToProps)(FacebookConnected)
+
+export default FacebookConnected
