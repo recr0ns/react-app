@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import './index.scss';
 
 import reducers from './reducers'
 
-import App from './app'
+import CV from './containers/fb'
 
 import registerServiceWorker from './registerServiceWorker'
 
@@ -24,9 +24,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <App/>
-    </Router>
+    <BrowserRouter>
+      <CV/>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root'));
 registerServiceWorker();
