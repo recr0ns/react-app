@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Switch, Route, Link, NavLink } from 'react-router-dom'
+import { Switch, Route, NavLink } from 'react-router-dom'
 
-import Identity from './identity'
-import Content from './content'
+import Identity from './src/identity'
+import Content from './src/content'
 
 export default class Facebook extends Component {
   render() {

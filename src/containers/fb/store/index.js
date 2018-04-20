@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
-import rootReducer from '../reducers'
+import facebook from '../reducers'
 
-const store = createStore(rootReducer);
+const store = createStore(facebook);
 
 export default store;

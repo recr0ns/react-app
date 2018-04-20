@@ -5,21 +5,21 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import './index.scss';
-
-import reducers from './reducers'
+import rootReducer from './containers/fb/reducers'
+import './index.scss'
 
 import CV from './containers/fb'
 
 import registerServiceWorker from './registerServiceWorker'
 
 const reducer = combineReducers({
-  ...reducers,
+  facebook: rootReducer,
   routing: routerReducer
 })
 
 const store = createStore(
-  reducer
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
 ReactDOM.render(
@@ -29,4 +29,5 @@ ReactDOM.render(
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'));
+
 registerServiceWorker();

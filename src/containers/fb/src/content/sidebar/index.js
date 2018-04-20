@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 
-export default class Sidebar extends Component {
+const mapStateToProps = state => {
+  return {
+    token: state.facebook.auth.token,
+    profile: state.facebook.profile
+  }
+}
+
+class SidebarConnected extends Component {
   constructor(props) {
     super(props)
 
@@ -15,7 +23,7 @@ export default class Sidebar extends Component {
   async componentDidMount() {
     const resp = await axios.get('https://social-webapi.azurewebsites.net/api/users/me', {
       headers: {
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjM0IiwiZXhwIjoxNTI0MzIyNjg5fQ.iEV3SK8xxgqTnya47rxyxXmO9O6AQh8uP7unmcyXy7A`
+        'Authorization': `Bearer ${this.props.token}`
       }
     })
     this.setState({profile: resp.data})
@@ -30,3 +38,7 @@ export default class Sidebar extends Component {
     )
   }
 }
+
+const Sidebar = connect(mapStateToProps)(SidebarConnected)
+
+export default Sidebar
