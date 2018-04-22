@@ -1,17 +1,10 @@
 import React from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 
-import { setToken } from '../../../actions'
+import { signIn } from '../../../actions'
 
-const mapDispatchToProps = dispatch => { 
-  return {
-    setToken: token => dispatch(setToken(token))
-  }
-}
-
-class SignInConnected extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props)
   
@@ -32,14 +25,13 @@ class SignInConnected extends React.Component {
   async handleSignIn(e) {
     e.preventDefault();
 
+    const { history } = this.props
+
     const model = {
       email: this.state.email,
       password: this.state.password
     }
-    const resp = await axios.post('https://social-webapi.azurewebsites.net/api/identity/signin', model)
-    this.props.setToken(resp.data.token)
-    
-    this.props.history.push('/feed')
+    this.props.signIn(model, history)
   }
 
   render() {
@@ -51,6 +43,7 @@ class SignInConnected extends React.Component {
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
           <br/>
           <input type="submit" value="Sign in"/>
+          {this.props.signingIn && <h4>signing in...</h4>}
         </form>
         <Link to="/identity/sign-up">Do you want an account?</Link>
       </div>
@@ -58,6 +51,20 @@ class SignInConnected extends React.Component {
   }
 }
 
-const SignIn = connect(null, mapDispatchToProps)(SignInConnected)
+const mapStateToProps = state => {
+  const {
+    facebook : {
+      auth: {
+        signingIn
+      }
+    }
+  } = state
 
-export default SignIn
+  return {
+    signingIn
+  }
+}
+
+export default connect(mapStateToProps, {
+  signIn
+})(SignIn)

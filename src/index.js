@@ -1,26 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import rootReducer from './containers/fb/reducers'
+import rootSaga from './containers/fb/sagas'
+
 import './index.scss'
 
 import CV from './containers/fb'
 
 import registerServiceWorker from './registerServiceWorker'
+import configureStore from './containers/fb/store';
 
-const reducer = combineReducers({
-  facebook: rootReducer,
-  routing: routerReducer
-})
-
-const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+const store = configureStore(window.__INITIAL_STATE__)
+store.runSaga(rootSaga)
 
 ReactDOM.render(
   <Provider store={store}>

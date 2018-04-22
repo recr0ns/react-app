@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, NavLink } from 'react-router-dom'
+import { Switch, Route, NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Identity from './src/identity'
@@ -26,6 +26,7 @@ class FacebookConnected extends Component {
             <Route exact path="/" component={Main}/>
             <Route path="/identity" component={Identity}/>
             <Route path="/feed" component={Content}/>
+            <Route component={Page404} />
           </Switch>
         </main>
       </div>
@@ -36,6 +37,15 @@ class FacebookConnected extends Component {
 const Main = () => {
   return (
     <h1>Main page!</h1>
+  )
+}
+
+const Page404 = () => {
+  return (
+    <div>
+      <h1>Oops, page is not found!</h1>
+      <Link to='/'>Go to main</Link>
+    </div>
   )
 }
 
