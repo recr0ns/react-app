@@ -28,8 +28,8 @@ export const URLS = {
         GetAll: 'users'
     },
     Posts: {
-        Feed: (userId) => `users/${userId}/feed`,
-        Wall: (userId) => `users/${userId}/wall`
+        Feed: (userId) => `users/${userId}/posts/feed`,
+        Wall: (userId) => `users/${userId}/posts/wall`
     },
     Follow: {
         Followings: userId => `users/${userId}/followings`,
@@ -39,6 +39,10 @@ export const URLS = {
 
 export function setAuthToken(token) {
     client.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
+
+export function clearAuthToken() {
+    client.defaults.headers.common['Authorization'] = ''
 }
 
 export default client

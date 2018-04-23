@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+import c from '../../../constants'
 
 const initialState = {
   email: 'ed.tishkin@gmail.com',
@@ -42,6 +43,7 @@ class SignUp extends React.Component {
   }
 
   render() {
+    console.log(c.Identity.SignUp)
     return (
       <div>
         <h1>Sign Up</h1>

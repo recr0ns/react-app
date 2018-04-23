@@ -1,5 +1,5 @@
-import { delay } from 'redux-saga'
-import { take, put, call, fork, select, all } from 'redux-saga/effects'
+// import { delay } from 'redux-saga'
+import { take, put, call, fork, all, takeEvery } from 'redux-saga/effects'
 
 import api from './api'
 import C from './constants'
@@ -7,9 +7,9 @@ import C from './constants'
 function* signInAsync(model, history) {
     yield put({ type: C.Identity.BeginSignIn })
     try {
-        var resp = yield call(api.Identity.SignIn, model)
+        const resp = yield call(api.Identity.SignIn, model)
         if (resp.status === 200) {
-            yield put({ type: C.Identity.SetToken, payload: resp.data.token })
+            yield fork(setupToken, resp.data.token)
         }
         yield put({ type: C.Identity.SuccessSignIn })
         history.push('/feed')
@@ -22,7 +22,54 @@ function* signInAsync(model, history) {
 }
 
 function* setupToken(token) {
+    localStorage.setItem('auth_token', token)
     yield call(api.setAuthToken, token)
+    yield put({ type: C.Identity.SetToken, payload: token })
+    yield put({ type: C.Self.Fetch })
+}
+
+function* checkToken() {
+    const token = localStorage.getItem('auth_token')
+    if (token) {
+        yield call(api.setAuthToken, token)
+        yield put({ type: C.Identity.SetToken, payload: token })
+        yield put({ type: C.Self.Fetch })    
+    }
+}
+
+function* fetchAllUsers() {
+    try {
+        const resp = yield call(api.users.get)
+        if (resp.status === 200) {
+            yield put({ type: C.Users.SetList, payload: resp.data })
+        }
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+function* selfFetch() {
+    console.log('self fetching')
+    const resp = yield call(api.self.profile.get)
+    if (resp.status === 200) {
+        yield put({ type: C.Self.SetProfile, payload: resp.data })
+
+        const id = resp.data.id
+        const [feed, wall] = yield all([
+            call(api.posts.feed, id),
+            call(api.posts.wall, id)
+        ])
+
+        yield put({ type: C.Self.SetFeed, payload: feed.data })
+        yield put({ type: C.Self.SetWall, payload: wall.data })
+    }
+}
+
+function* clearToken(history) {
+    localStorage.removeItem('auth_token')
+    yield call(api.clearAuthToken)
+    yield put({ type: C.Identity.ClearToken })    
 }
 
 // WATCHERS
@@ -36,14 +83,38 @@ function* watchSignIn() {
 
 function* watchSetupToken() {
     while(true) {
-        const { payload: token } = yield take(C.Identity.SetToken)
+        const { payload: token } = yield take(C.Identity.SetupToken)
         yield fork(setupToken, token)
     }
 }
 
+function* watchInit() {
+    while(true) {
+        yield take(C.Init)
+        yield fork(checkToken)
+    }
+}
+
+function* watchFetchAllUsers() {
+    while(true) {
+        yield take(C.Users.GetAll)
+        yield fork(fetchAllUsers)
+    }
+}
+
+function* watchSelfFetch() {
+    while(true) {
+        yield take(C.Self.Fetch)
+        yield fork(selfFetch)
+    }
+}
 
 export default function* root() {
     yield all([
+        fork(watchInit),
         fork(watchSignIn),
+        fork(watchSetupToken),
+        fork(watchFetchAllUsers),
+        fork(watchSelfFetch),
     ])
 }

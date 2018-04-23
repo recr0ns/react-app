@@ -1,4 +1,4 @@
-import client, { withToken, URLS } from './http_client'
+import client, { URLS } from './http_client'
 
 const get = async () => client.get(URLS.Self.Profile.Get)
 const update = async () => client.put(URLS.Self.Profile.Update)

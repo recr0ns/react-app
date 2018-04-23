@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware, { END } from 'redux-saga'
 import { routerReducer } from 'react-router-redux'
 import { createLogger } from 'redux-logger'
@@ -18,7 +18,8 @@ export default function configureStore(initialState, context={}) {
         applyMiddleware(
             sagaMiddleware,
             createLogger()
-        )
+        ),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     )
 
     if (module.hot) {
