@@ -34,9 +34,18 @@ const Author = ({user, time, isYours}) => {
   )
 } 
 
-const PostsList = ({posts, id}) => (
-  <ul className={s.list}>{posts.map(p => <Post key={p.id} {...p} isYours={id === p.user.id}/>)}</ul>
-)
+const PostsList = ({posts: posts = [], id}) => {
+  return posts.length === 0
+    ? (
+      <div className={s.none}>
+        <div className={s.sad}></div>
+        <p>No posts</p>
+      </div>
+    )
+    : (
+      <ul className={s.list}>{posts.map(p => <Post key={p.id} {...p} isYours={id === p.user.id}/>)}</ul>
+    )
+}
 
 export {
   PostsList

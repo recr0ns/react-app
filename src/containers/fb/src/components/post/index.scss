@@ -13,6 +13,25 @@
   margin-bottom: 16px;
 }
 
+.none {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .sad {
+    background-image: url('/images/sad.svg');
+    background-size: cover;
+    height: 240px;
+    width: 240px;
+    display: inline-block;
+  }
+
+  p {
+    font-size: 28px;
+    color: #aaa;
+  }
+}
+
 .content {
   .image {
     width: 100%;

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+import {PostsList} from '../../components/post'
+
 class Feed extends Component {
   renderPosts() {
     if (this.props.feed.length === 0) {
@@ -14,7 +16,7 @@ class Feed extends Component {
     return (
       <div>
         <h2>my news</h2>
-        {this.renderPosts()}
+        <PostsList post={this.props.feed}/>
       </div>
     )
   }
