@@ -1,0 +1,38 @@
+.users {
+  list-style: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  border-bottom: solid 1px #eee;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 400;
+
+  &:hover {
+    background-color: #fafafa;
+    color: #D81B60;
+  }
+}
+
+$avatar-radius: 22px;
+
+.avatar {
+  height: 2*$avatar-radius;
+  width: 2*$avatar-radius;
+  border-radius: $avatar-radius;
+  overflow: hidden;
+  background-color: #bbb;
+  margin-right: 16px;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}

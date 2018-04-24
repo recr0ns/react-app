@@ -1,10 +1,10 @@
-// import { delay } from 'redux-saga'
-import { take, put, call, fork, all, takeEvery } from 'redux-saga/effects'
+import { take, put, call, fork, all } from 'redux-saga/effects'
 
 import api from './api'
 import C from './constants'
 
 function* signInAsync(model, history) {
+    console.log('sign in saga')
     yield put({ type: C.Identity.BeginSignIn })
     try {
         const resp = yield call(api.Identity.SignIn, model)
@@ -51,25 +51,31 @@ function* fetchAllUsers() {
 
 function* selfFetch() {
     console.log('self fetching')
-    const resp = yield call(api.self.profile.get)
-    if (resp.status === 200) {
-        yield put({ type: C.Self.SetProfile, payload: resp.data })
+    try {
+        const resp = yield call(api.self.profile.get)
+        if (resp.status === 200) {
+            yield put({ type: C.Self.SetProfile, payload: resp.data })
 
-        const id = resp.data.id
-        const [feed, wall] = yield all([
-            call(api.posts.feed, id),
-            call(api.posts.wall, id)
-        ])
+            const id = resp.data.id
+            const [feed, wall] = yield all([
+                call(api.posts.feed, id),
+                call(api.posts.wall, id)
+            ])
 
-        yield put({ type: C.Self.SetFeed, payload: feed.data })
-        yield put({ type: C.Self.SetWall, payload: wall.data })
+            yield put({ type: C.Self.SetFeed, payload: feed.data })
+            yield put({ type: C.Self.SetWall, payload: wall.data })
+        }
+    }
+    catch(e) {
+        console.log(e)
     }
 }
 
-function* clearToken(history) {
+function* logOut(history) {
     localStorage.removeItem('auth_token')
     yield call(api.clearAuthToken)
-    yield put({ type: C.Identity.ClearToken })    
+    yield put({ type: C.Identity.ClearToken })   
+    history.push('/') 
 }
 
 // WATCHERS
@@ -109,6 +115,13 @@ function* watchSelfFetch() {
     }
 }
 
+function* watchLogOut() {
+    while(true) {
+        const { payload: { history }} = yield take(C.Identity.LogOut)
+        yield fork(logOut, history)
+    }
+}
+
 export default function* root() {
     yield all([
         fork(watchInit),
@@ -116,5 +129,6 @@ export default function* root() {
         fork(watchSetupToken),
         fork(watchFetchAllUsers),
         fork(watchSelfFetch),
+        fork(watchLogOut)
     ])
 }

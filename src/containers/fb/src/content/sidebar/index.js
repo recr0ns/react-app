@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
 const mapStateToProps = state => {
   return {
@@ -9,10 +8,6 @@ const mapStateToProps = state => {
 }
 
 class SidebarConnected extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div>

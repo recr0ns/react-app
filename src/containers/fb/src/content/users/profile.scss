@@ -1,0 +1,65 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.information {
+  display: flex;
+  flex-direction: row;
+}
+
+.profileImage {
+  flex: 0 0 auto;
+}
+.info {
+  flex: 1 0 auto;
+}
+
+.navigation {
+  display: block;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  border-top: solid #f0f0f0 1px;
+  margin: 16px 0;
+
+  li {
+    flex: 1;
+    height: 36px;
+  }
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-bottom: solid #f0f0f0 3px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #d0d0d0;
+  letter-spacing: 0.6px;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  span, p {
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.activeLink {
+  @extend .link;
+  border-color: #D81B60;
+  color: #D81B60;
+}

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import s from './index.scss'
+
 import Sidebar from './sidebar'
 import Feed from './feed'
 import UserList from './users'
@@ -20,15 +22,18 @@ class ConnectedContent extends Component {
     }
 
     return (
-      <div>
-        <Sidebar/>
-        <div>
+      <div className={s.container}>
+        <aside className={s.sidebar}> 
+          <Sidebar/>
+        </aside>
+        <div className={s.content}>
           <Switch>
             <Route path='/feed' component={Feed}/>
             <Route exact path='/users' component={UserList}/>
             <Route path='/users/:id' component={Profile}/>
           </Switch>
         </div>
+        <aside className={s.right}></aside>
       </div>
     )
   }

@@ -1,0 +1,53 @@
+@import '../../styles/index.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 400px;
+
+  h1 {
+    @extend .header;
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 32px;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .processing {
+    align-self: center;
+    padding-bottom: 16px;
+    color: #bbb;
+  }
+
+  input[type='email'],
+  input[type='password'] {
+    @extend %input_text;
+    display: block;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type='submit']{
+    @extend %primary_button;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+      @extend %primary_button__hover;
+    }
+
+    &[disabled] {
+      cursor: default;
+      background-color: #ddd;
+    }
+  }
+}

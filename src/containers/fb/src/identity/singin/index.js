@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 
+import s from './signin.scss'
+
 import { signIn } from '../../../actions'
 
 class SignIn extends React.Component {
@@ -9,9 +11,13 @@ class SignIn extends React.Component {
     super(props)
   
     this.state = {
-       email: "ed.tishkin@gmail.com",
-       password: "P@ssw0rd"
+       email: "",
+       password: ""
     }
+  //   this.state = {
+  //     email: "ed.tishkin@gmail.com",
+  //     password: "P@ssw0rd"
+  //  }
   }
 
   handleChange(name, evt) {
@@ -36,14 +42,14 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={s.container}>
         <h1>Sign In</h1>
         <form onSubmit={(e) => this.handleSignIn(e)}>
           <input type="email" placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')}/>
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
           <br/>
-          <input type="submit" value="Sign in"/>
-          {this.props.signingIn && <h4>signing in...</h4>}
+          <input type="submit" disabled={this.props.signingIn} value="Sign in"/>
+          {this.props.signingIn && <span className={s.processing}>signing in...</span>}
         </form>
         <Link to="/identity/sign-up">Do you want an account?</Link>
       </div>

@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route, NavLink, Link, withRouter } from 'react-router-dom'
 
+import UsersList  from '../../components/users_list'
+import { PostsList }  from '../../components/post'
+
+import s from './profile.scss'
+
 import api from '../../../api'
 
 class Profile extends Component {
@@ -34,16 +39,20 @@ class Profile extends Component {
 
   renderProfile({ name, imageUrl, info, birthday }) {
     return (
-      <div>
-        {imageUrl && <img height="200" width="200" src={imageUrl} alt="avatar"/>}
-        <h2>{name}</h2>
-        <h3>{birthday}</h3>
-        {info && <h3>{info}</h3>}
-        <ul>
-          <li><NavLink to={`/users/${this.id}/wall`}>Wall</NavLink></li>
-          <li><NavLink to={`/users/${this.id}/feed`}>Feed</NavLink></li>
-          <li><NavLink to={`/users/${this.id}/followers`}>Followers: <span>{this.state.user.followers.length}</span></NavLink></li>
-          <li><NavLink to={`/users/${this.id}/followings`}>Followings: <span>{this.state.user.followings.length}</span></NavLink></li>
+      <div className={s.profile}>
+        <div className={s.information}>      
+          <img className={s.profileImage} height="200" width="200" src={imageUrl || '/images/incognito.png'} alt="avatar"/>
+          <div className={s.info}>
+            <h2>{name}</h2>
+            <h3>{birthday}</h3>
+            {info && <h3>{info}</h3>}
+          </div>
+        </div>
+        <ul className={s.navigation}>
+          <li><ProfileLink exact to={`/users/${this.id}`}><span>Wall</span></ProfileLink></li>
+          <li><ProfileLink to={`/users/${this.id}/feed`}><span>Feed</span></ProfileLink></li>
+          <li><ProfileLink to={`/users/${this.id}/followers`}><p>Followers: <span>{this.state.user.followers.length}</span></p></ProfileLink></li>
+          <li><ProfileLink to={`/users/${this.id}/followings`}><p>Followings: <span>{this.state.user.followings.length}</span></p></ProfileLink></li>
         </ul>
       </div>
     )
@@ -51,39 +60,19 @@ class Profile extends Component {
 
   renderWall(posts) {
     return (
-      <ul>
-        {posts.map(p => 
-          <li key={p.id}>
-            <div>
-              {p.imageUrl && <img height="300" width="300" src={p.imageUrl}/>}
-              <p>{p.text}</p>
-              <span>{p.dateTime}</span>
-            </div>
-          </li>)}
-      </ul>
+      <PostsList posts={posts} id={this.id}/>
     )
   }
 
   renderFeed(posts) {
     return (
-      <ul>
-        {posts.map(p => 
-          <li key={p.id}>
-            <div>
-              {p.imageUrl && <img height="300" width="300" src={p.imageUrl}/>}
-              <p>{p.text}</p>
-              <span>By {p.user.name} at {p.dateTime}</span>
-            </div>
-          </li>)}
-      </ul>
+      <PostsList posts={posts} id={this.id}/>
     )
   }
 
   renderUsers(users) {
     return (
-      <ul>
-        {users.map(u => <UserCard key={u.id} {...u}/>)}
-      </ul>
+      <UsersList users={users}/>
     )
   }
 
@@ -95,23 +84,21 @@ class Profile extends Component {
     return (
       <div>
         {this.renderProfile(this.state.user.profile)}
-        <hr/>
         <Switch>
           <Route path='/users/:id/followers' render={() => this.renderUsers(this.state.user.followers)}/>
           <Route path='/users/:id/followings' render={() => this.renderUsers(this.state.user.followings)}/>
           <Route path='/users/:id/feed' render={() => this.renderFeed(this.state.user.feed)}/>
           <Route path='/users/:id' render={() => this.renderWall(this.state.user.wall)}/>
         </Switch>
-        <hr/>
-        <button onClick={() => this.props.history.push('/users')}>Go back</button>
       </div>
     )
   }
 }
 
-const UserCard = ({id, name, imageUrl}) => {
+const ProfileLink = (props) => {
+  const {children, ...opts} = props;
   return (
-    <li><Link to={`/users/${id}`}>{`${id}: ${name}${imageUrl? ' - has image': ''}`}</Link></li>
+    <NavLink className={s.link} activeClassName={s.activeLink} {...opts}>{children}</NavLink>
   )
 }
 

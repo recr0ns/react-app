@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import { fetchAllUsers } from '../../../actions'
 
+import UsersList from '../../components/users_list'
+
 class UserList extends Component {
   componentDidMount() {
     this.props.fetchAllUsers()
@@ -10,21 +12,14 @@ class UserList extends Component {
 
   render() {
     return (
-      <ul>
-        {this.props.users.map(u => <UserCard {...u} key={u.id}/>)}
-      </ul>
+      <UsersList users={this.props.users.filter(u => u.id != this.props.id)} />
     )
   }
 }
 
-const UserCard = ({id, name, imageUrl}) => {
-  return (
-    <li><Link to={`/users/${id}`}>{`${id}: ${name}${imageUrl? ' - has image': ''}`}</Link></li>
-  )
-}
-
 const mapStateToProps = state => {
   return {
+    id: state.facebook.profile.id,
     users: state.facebook.users
   }
 }

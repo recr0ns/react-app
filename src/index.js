@@ -7,7 +7,7 @@ import rootSaga from './containers/fb/sagas'
 
 import './index.scss'
 
-import CV from './containers/fb'
+import CV from './containers/fb/src'
 
 import registerServiceWorker from './registerServiceWorker'
 import configureStore from './containers/fb/store';

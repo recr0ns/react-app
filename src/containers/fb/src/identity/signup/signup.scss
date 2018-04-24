@@ -1,0 +1,56 @@
+@import '../../styles/index.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 400px;
+
+  h1 {
+    @extend .header;
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 32px;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  .inputGroup {
+    margin-bottom: 4px;
+  }
+
+  .inputGroup p {
+    margin: 0;
+    color: #000;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.8px;
+  }
+
+  input[type='email'],
+  input[type='text'],
+  input[type='date'],
+  input[type='password'] {
+    @extend %input_text;
+    display: block;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type='submit']{
+    @extend %primary_button;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+      @extend %primary_button__hover;
+    }
+  }
+}

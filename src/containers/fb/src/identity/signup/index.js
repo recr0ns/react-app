@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import c from '../../../constants'
 
+import s from './signup.scss'
+
 const initialState = {
   email: 'ed.tishkin@gmail.com',
   password: 'P@ssw0rd',
@@ -45,15 +47,15 @@ class SignUp extends React.Component {
   render() {
     console.log(c.Identity.SignUp)
     return (
-      <div>
+      <div className={s.container}>
         <h1>Sign Up</h1>
         <form onSubmit={(e) => this.handleSignUp(e)}>
-          <input type="email" placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')}/>
-          <input type="password" placeholder="Password" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
-          <input type="password" placeholder="Confirm password" value={this.state.confirmPassword} onChange={this.handleChange.bind(this, 'confirmPassword')}/>
+          <Input text="Email" type="email" placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')}/>
+          <Input text="Password" type="password" placeholder="Password" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
+          <Input text="Confirm password" type="password" placeholder="Confirm password" value={this.state.confirmPassword} onChange={this.handleChange.bind(this, 'confirmPassword')}/>
           <br/>
-          <input type="text" placeholder="Your name" value={this.state.name} onChange={this.handleChange.bind(this, 'name')}/>
-          <input type="date" placeholder="Birth date" value={this.state.birthday} onChange={this.handleChange.bind(this, 'birthday')}/>
+          <Input text="Name" type="text" placeholder="Your name" value={this.state.name} onChange={this.handleChange.bind(this, 'name')}/>
+          <Input text="birthday" type="date" placeholder="Birth date" value={this.state.birthday} onChange={this.handleChange.bind(this, 'birthday')}/>
           <br/>
           <input type="submit" value="Sign Up"/>
         </form>
@@ -61,6 +63,15 @@ class SignUp extends React.Component {
       </div>
     )
   }
+}
+
+const Input = ({text, type, placeholder, value, onChange}) => {
+  return (
+    <div className={s.inputGroup}>
+      <p>{text}</p>
+      <input type={type} placeholder={placeholder} value={value} onChange={onChange}/>
+    </div>
+  )
 }
 
 export default SignUp
