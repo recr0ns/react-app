@@ -1,0 +1,48 @@
+.block {
+    background-color: #271531;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.header {
+    padding: 8px 16px;
+}
+
+.header_actions {
+    display: inline-block;
+}
+
+
+$action-btn-size: 14px;
+$color-inactive: #cdcdcd;
+$color-red: #e4443d;
+$color-yellow: #e2ab68;
+$color-green: #46b32a;
+
+%header_action_button {
+    height: $action-btn-size;
+    width: $action-btn-size;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: $color-inactive;
+    margin-right: 6px;
+}
+
+.header_action_close_btn {
+    @extend %header_action_button;
+    background-color: $color-red;
+}
+
+.header_action_mini_btn {
+    @extend %header_action_button;
+    background-color: $color-yellow;
+}
+
+.header_action_maxi_btn {
+    @extend %header_action_button;
+    background-color: $color-green;
+}
+
+.content {
+    padding: 16px;
+}
