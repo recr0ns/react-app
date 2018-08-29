@@ -1,0 +1,9 @@
+@import '../../styles/_base.scss';
+
+.btn {
+    @extend %button;
+
+    &:hover {
+        @extend %button--hover;
+    }
+} 

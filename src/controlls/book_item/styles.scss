@@ -1,0 +1,33 @@
+@import '../../styles/_base.scss';
+
+.item {
+    width: 10em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+
+    h2 {
+        font-size: 1em;
+        margin: 0;
+        margin-bottom: 0.25em;
+    }
+
+    h3 {
+        font-size: 0.8em;
+        font-weight: 400;
+        margin: 0;
+    }
+    &:hover .item_cover {
+        box-shadow: 0px 4px 7px 0px rgba(0,0,0,0.3);
+    }
+}
+
+.item_cover {
+    border-radius: 0.5em;
+    width: 6em;
+    height: 9em;
+    background-color: $color-light-gray;
+    transition: all ease-in 0.3s;
+    margin-bottom: 0.5em;
+}

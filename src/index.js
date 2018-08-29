@@ -5,7 +5,8 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import './index.scss';
+import './index.scss'
+import 'normalize.css'
 
 import reducers from './reducers'
 

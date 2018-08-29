@@ -1,0 +1,57 @@
+@import '../../styles/_base.scss';
+
+.layout {
+    height: 100vh;
+    max-height: 100vh;
+    background: linear-gradient(to bottom, $color-light-gray 0%, #F2F7F2 100%);
+    display: flex;
+    flex-direction: row;
+
+    aside {
+        flex: 0 0 20em;
+        padding: 2em;
+        box-sizing: border-box;
+
+        .logo {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: $color-black;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 3em;
+
+            .logo_image {
+                height: 2em;
+                width: 2em;
+                margin-right: 0.5em;
+                background: $color-primary;
+                mask: url('/images/open-book.svg') no-repeat center;
+                mask-size: cover;
+            }
+        }
+
+        nav a {
+            display: block;
+            text-decoration: none;
+            color: $color-black;
+            font-size: 1.2em;
+            font-weight: 400;
+            margin-bottom: 1em;
+            padding-left: 3em;
+        }
+    }
+
+    main {
+        flex: 1 0 auto;
+
+        .main_scroll {
+            max-height: 100%;
+            width: 100%;
+            max-width: 100%;
+            padding: 2em;
+            box-sizing: border-box;
+            overflow-y: auto;        
+        }
+    }
+}
