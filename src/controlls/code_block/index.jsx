@@ -12,7 +12,7 @@ class CodeBlock extends Component {
             <span className={s.header_action_maxi_btn} />
           </div>
         </div>
-        <div class={s.content}>
+        <div className={s.content}>
             <p>{this.props.text}</p>
         </div>
       </div>

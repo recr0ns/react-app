@@ -11,6 +11,9 @@
         flex: 0 0 20em;
         padding: 2em;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
 
         .logo {
             font-size: 1.4em;
@@ -31,6 +34,9 @@
             }
         }
 
+        nav {
+            flex: 1;
+        }
         nav a {
             display: block;
             text-decoration: none;
