@@ -1,0 +1,43 @@
+@import '../../styles/_base.scss';
+
+.layout {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+aside {
+    flex: 0 0 300px;
+    background-color: #2B2F4C;
+}
+
+.logo {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.4em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #E4E3E8;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 0;
+    border-bottom: 1px solid #292941;
+    margin-bottom: 2em;
+
+    .logo_image {
+        height: 1.3em;
+        width: 1.3em;
+        margin-right: 0.5em;
+        background: $color-primary;
+        mask: url('/images/open-book.svg') no-repeat center;
+        mask-size: cover;
+    }
+}
+
+main {
+    flex: 1;
+    background-color: #F2F7FB;
+    padding: 1em 2em;
+}

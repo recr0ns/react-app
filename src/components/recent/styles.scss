@@ -1,0 +1,79 @@
+@import '../../styles/_base.scss';
+
+%block {
+    padding: 1em;
+    background-color: $color-white;
+    color: $color-black;
+    border-radius: 5px;
+    box-shadow: 0px 4px 5px -2px rgba(0,0,0,0.1);
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+.books_block {
+    @extend %block;
+    height: 270px;   
+}
+.block {
+    @extend %block;
+    height: 100%;    
+}
+
+.block_title {
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $color-dark-gray;
+    margin-bottom: 1.5em;
+}
+
+.scrollable_block_content {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    left: 0;
+    bottom: -17px;
+    padding: 0 10px 27px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.scrollable_block_content > div {
+    flex-shrink: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content > h1 {
+    font-size: 1.7em;
+    color: #3C405B;
+}
+.row {
+    margin-bottom: 1em;
+    flex: 0;
+}
+
+.double_column {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+
+    &>div {
+        flex: 1;
+    }
+}
+
+.double_column>div:nth-child(1) {
+    margin-right: 0.5em; 
+}
+.double_column>div:nth-child(2) {
+    margin-left: 0.5em; 
+}
